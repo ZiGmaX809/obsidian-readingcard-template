@@ -140,7 +140,6 @@ for (let y in read_years_months) {
 			weReadFiles
 				.sort(b => b.name)
 				.map(b => {
-					console.log(b);
 					if (b && b.year && y === b.year && b.month && m === b.month) {
 						return [b.cover, b.info];
 					}
