@@ -66,7 +66,7 @@ for (let eachfile of weReadFiles) {
 		bookInfo.author != null
 			? '\r`[!!|book-user|book-user:作者：' + bookInfo.author + '|' + theme[selected][0] + ']`'
 			: '\r`[!!|book-user|book-user:作者：-|]`';
-	// %% %%let intro = bookInfo.intro != null ? '\r简介：' + bookInfo.intro.substring(0,50) + '……' : '\r简介：-'
+	//let intro = bookInfo.intro != null ? '\r简介：' + bookInfo.intro.substring(0,50) + '……' : '\r简介：-'
 	let readdate =
 		'\r`[!!|calendar-range|calendar-range:阅读日期：' +
 		bookInfo.lastReadDate +
@@ -99,7 +99,7 @@ for (let eachfile of weReadFiles) {
 	}
 
 	//获取阅读进度或者是否读完状态
-	const readProgress = bookInfo.progress == -1 ? '0%' : eachfile.frontmatter.progress;
+	const readProgress = bookInfo.progress == -1 ? '0%' : bookInfo.progress;
 	const readStatus = bookInfo.readingStatus
 	//添加彩虹猫进度条样式
 	const progress = readStatus == '读完' ? 100 : parseFloat(readProgress);
