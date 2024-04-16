@@ -111,7 +111,7 @@ for (let eachfile of weReadFiles) {
 		let p_color = progress_color[selected][Math.floor(progress / 25)];
 		eachfile['info'] = dv.paragraph(
 			covertInfo +
-				'\n`[!!|book-marked|book: 阅读进度：' +
+				'\r`[!!|book-marked|book: 阅读进度：' +
 				readProgress +
 				'|' +
 				p_color +
@@ -121,7 +121,7 @@ for (let eachfile of weReadFiles) {
 	} else {
 		eachfile['info'] = dv.paragraph(
 			covertInfo +
-				'\n`[!!|book-check|book:已读完|' +
+				'\r`[!!|book-check|book:已读完|' +
 				progress_color[selected][4] +
 				']`' +
 				readProgressBar
