@@ -7,9 +7,10 @@
 
 ## 特点：
 
-1. 以卡片的形式展示正在阅读或者已经阅读书籍；
-2. 可自动遍历所有笔记，并以年、月分类展示当月所读的书籍；
-3. 自定义色彩管理，可自行变更主题。
+1. 基于WeRead同步的微信阅读笔记自动生成；
+2. 以卡片的形式展示正在阅读或者已经阅读书籍；
+3. 以年、月分类展示当月所读的书籍；
+4. 自定义色彩管理，可自行变更主题。
 
 ## 准备工作
 
@@ -179,13 +180,13 @@ cssclasses:
           RANDOM_FILENAME=$(uuidgen).svg
           mv ./OUT_FOLDER/weread.svg ./OUT_FOLDER/$RANDOM_FILENAME
           echo "Renamed file to $RANDOM_FILENAME"
-      - name: read time sync
+	- name: read time sync
         run: |
           python -u scripts/read_time.py
-    ```
+	```
     替换成
-    ```yaml
-    - name: push
+	```yaml
+	- name: push
         run: |		
           git checkout --orphan output		
           git reset		
@@ -198,9 +199,9 @@ cssclasses:
 8.  项目运行后，会自动在`output`分支中的`./OUT_FOLDER`文件夹中存放名为weread.svg的热力图。但是如果直接引用图片在预览模式则可能会自动添加阴影，因此需要自定义一下CSS样式。
 在ReadingCard中添加`<img src="https://raw.githubusercontent.com/ZiGmaX809/weread2notion-pro/output/OUT_FOLDER/weread.svg" class="custom_card">`
 并且在`设置-外观-CSS代码片段`中添加自定义片段
-```css
-.custom_card {
-	--webkit-filter: drop-shadow: 0 0px 0px #ccc !important;
-	box-shadow: 0 0px 0px #ccc; 
-}
-```
+	```css
+	.custom_card {
+		--webkit-filter: drop-shadow: 0 0px 0px #ccc !important;
+		box-shadow: 0 0px 0px #ccc; 
+	}
+	```
