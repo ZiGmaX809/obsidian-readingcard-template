@@ -134,7 +134,7 @@ console.log(read_years_months);
 for (let y in read_years_months) {
 	dv.paragraph('## ' + y + '年');
 	for (let m of read_years_months[y].sort()) {
-		dv.paragraph('### ' + m + '月');
+		dv.paragraph('### ' + parseInt(m).toString() + '月');
 		dv.table(
 			['封面', '信息'],
 			weReadFiles
