@@ -99,9 +99,10 @@ for (let eachfile of weReadFiles) {
 	}
 
 	//获取阅读进度或者是否读完状态
-	const readProgress = eachfile.frontmatter.progress == -1 ? '0%' : eachfile.frontmatter.progress;
+	const readProgress = bookInfo.progress == -1 ? '0%' : eachfile.frontmatter.progress;
+	const readStatus = bookInfo.readingStatus
 	//添加彩虹猫进度条样式
-	const progress = parseFloat(readProgress);
+	const progress = readStatus == '读完' ? 100 : parseFloat(readProgress);
 	const readProgressBar =
 		"<div class='nyan-cat-progress-container'><div class='nyan-cat-progress-bar' value=" +
 		progress +
