@@ -130,7 +130,6 @@ for (let eachfile of weReadFiles) {
 }
 
 //按年份输出阅读卡片
-console.log(read_years_months);
 for (let y in read_years_months) {
 	dv.paragraph('## ' + y + '年');
 	for (let m of read_years_months[y].sort()) {
