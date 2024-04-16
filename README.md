@@ -43,7 +43,7 @@
 
 如果在其他地方需要引用该样式，请使用以下方式：
 ```html
-	<div class="nyan-cat-progress-container"><div class="nyan-cat-progress-bar" value=8><div class="nyan-cat-rainbow"><div class="nyan-cat-img"></div></div></div></div>
+<div class="nyan-cat-progress-container"><div class="nyan-cat-progress-bar" value=8><div class="nyan-cat-rainbow"><div class="nyan-cat-img"></div></div></div></div>
 ```
 
 ## 插件设置
