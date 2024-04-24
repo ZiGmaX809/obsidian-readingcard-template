@@ -1,4 +1,4 @@
-## obsidian-readingcard-template
+## Obsidian-readingcard-template
 
 ### 一个Obsidian的阅读卡片模板
 
@@ -18,10 +18,10 @@
 
 需要安装如下插件：
 
-1. WeRead [GitHub - zhaohongxuan/obsidian-weread-plugin: Obsidian Weread Plugin is a plugin to sync Weread(微信读书) hightlights and annotations into your Obsidian Vault.](https://github.com/zhaohongxuan/obsidian-weread-plugin)
-2. Dataview [GitHub - blacksmithgu/obsidian-dataview: A data index and query language over Markdown files, for https://obsidian.md/.](https://github.com/blacksmithgu/obsidian-dataview)
-3. Badges [GitHub - gapmiss/badges: A light-weight plugin for displaying inline "badges" in Obsidian.md](https://github.com/gapmiss/badges)
-4. （选装）Callout Manager [GitHub - eth-p/obsidian-callout-manager: An Obsidian.md plugin that makes creating and configuring callouts easy.](https://github.com/eth-p/obsidian-callout-manager)
+1. **WeRead** [GitHub - zhaohongxuan/obsidian-weread-plugin: Obsidian Weread Plugin is a plugin to sync Weread(微信读书) hightlights and annotations into your Obsidian Vault.](https://github.com/zhaohongxuan/obsidian-weread-plugin)
+2. **Dataview** [GitHub - blacksmithgu/obsidian-dataview: A data index and query language over Markdown files, for https://obsidian.md/.](https://github.com/blacksmithgu/obsidian-dataview)
+3. **Badges** [GitHub - gapmiss/badges: A light-weight plugin for displaying inline "badges" in Obsidian.md](https://github.com/gapmiss/badges)
+4. **（选装）Callout Manager** [GitHub - eth-p/obsidian-callout-manager: An Obsidian.md plugin that makes creating and configuring callouts easy.](https://github.com/eth-p/obsidian-callout-manager)
 
 请自行在第三方插件页面搜索安装。
 
@@ -31,7 +31,7 @@
 因为`Dataview`原生并不支持卡片展示，因此需要自行添加CSS片段以支持该功能。
 
 将以下CSS片段下载后，置入`设置-外观-CSS代码片段`文件夹中并启用：
-[cardview.css](https://raw.githubusercontent.com/ZiGmaX809/PrivateRules/master/Others/cardview.css)
+[cardview.css](https://raw.githubusercontent.com/ZiGmaX809/obsidian-readingcard-template/main/css/cardview.css)
 
 #### 2.NyanCat-Progress
 
@@ -40,7 +40,7 @@
 但是该样式使用`<progress>`标签 + `::afer`伪元素实现，在iOS版的Obsidian中无法显示`::after`伪元素，因此我用`<div>`标签复刻了一个。
 
 将以下CSS片段下载后，置入`设置-外观-CSS代码片段`文件夹中并启用：
-[nyancat-div.css](https://raw.githubusercontent.com/ZiGmaX809/PrivateRules/master/Others/nyancat-div.css)
+[nyancat-div.css](https://raw.githubusercontent.com/ZiGmaX809/obsidian-readingcard-template/main/css/nyancat-div.css)
 
 如果在其他地方需要引用该样式，请使用以下方式：
 ```html
@@ -106,11 +106,11 @@ intro: {{metaData.intro}}
 ### 2. Callout Manager（如不需要WeRead笔记模板，请跳过）
 
 因为在WeRead的笔记模板中引用了自定义的Callout样式，因此需要在`Callout Manager`中进行添加以下样式（需以下名称，颜色和图标可以自行定义）：
-	1. highlight
-	2. comment
-	3. annotation
-	4. notes
-	5. review
+- highlight
+- comment
+- annotation
+- notes
+- review
 
 ### 3. Dataview
 
@@ -152,56 +152,56 @@ cssclasses:
 	[Notion – The all-in-one workspace for your notes, tasks, wikis, and databases.](https://api.notion.com/v1/oauth/authorize?client_id=f86ce456-f9cb-4cd5-8e4b-07bd9e18a8f8&response_type=code&owner=user&redirect_uri=https%3A%2F%2Fnotion-auth.malinkang.com%2Fweread2notionpro-oauth-callback)
 4. 在Fork项目中确认写入权限：
 	在路径`Settings->Actions->General`中确认`Workflow permissions`为`Read and write permissions`状态。
-5.  在Fork项目中添加`secrets`变量：
+5. 在Fork项目中添加`secrets`变量：
 	点击`Settings->Secrets and variables->New repository secret`
 	**依次添加**
 
-| secret键       | 值   | 备注    |
-| :------------ | :-- | ----- |
-| WEREAD_COOKIE |     | 第2步获取      |
-| NOTION_TOKEN  |     | 第3步获取      |
-| NOTION_PAGE   |     | 第3步获取      |
-| Name          |     | 热力图标题 |
+| secret键      | 值   | 备注       |
+| :------------ | :--- | ---------- |
+| WEREAD_COOKIE |      | 第2步获取  |
+| NOTION_TOKEN  |      | 第3步获取  |
+| NOTION_PAGE   |      | 第3步获取  |
+| Name          |      | 热力图标题 |
 6. 在`Settings->Secrets and variables`中添加`variables`
 
-| variables键       | 值         | 备注     |
-| ---------------- | --------- | ------ |
-| BACKGROUND_COLOR | `#ffffff` | 背景颜色，如果需要透明背景则设置为`none`  |
-| DOM_COLOR        | `#e8eaed` | 未填充的色块 |
-| TRACK_COLOR      | `#ffe75a` | 一级颜色   |
-| SPECIAL_COLOR    | `#feb934` | 二级颜色   |
-| SPECIAL_COLOR2   | `#f98c28` | 三级级颜色  |
-| TEXT_COLOR       | `#f98c28` | 文字颜色   |
-| Year             | `2024`    | 年份     |
+| variables键      | 值        | 备注                                     |
+| ---------------- | --------- | ---------------------------------------- |
+| BACKGROUND_COLOR | `#ffffff` | 背景颜色，如果需要透明背景则设置为`none` |
+| DOM_COLOR        | `#e8eaed` | 未填充的色块                             |
+| TRACK_COLOR      | `#ffe75a` | 一级颜色                                 |
+| SPECIAL_COLOR    | `#feb934` | 二级颜色                                 |
+| SPECIAL_COLOR2   | `#f98c28` | 三级级颜色                               |
+| TEXT_COLOR       | `#f98c28` | 文字颜色                                 |
+| Year             | `2024`    | 年份                                     |
 7. 因为项目默认会将热力图生成后上传至指定网站，所以需要修改一下action所运行的`workflow`文件，打开`.github/workflows/read_time.yml`，将下面的
-	```yaml
-	- name: Rename weread.svg to a random name
-        run: |
-          RANDOM_FILENAME=$(uuidgen).svg
-          mv ./OUT_FOLDER/weread.svg ./OUT_FOLDER/$RANDOM_FILENAME
-          echo "Renamed file to $RANDOM_FILENAME"
-	- name: read time sync
-        run: |
-          python -u scripts/read_time.py
-	```
-    替换成
-	```yaml
-	- name: push
-        run: |		
-          git checkout --orphan output		
-          git reset		
-          git config --local user.email "action@github.com"		
-          git config --local user.name "GitHub Action"		
-          git add ./OUT_FOLDER		
-          git commit -m '生成热力图' || echo "nothing to commit"		
-          git push origin output -f || echo "nothing to push"
-	```
-8.  项目运行后，会自动在`output`分支中的`./OUT_FOLDER`文件夹中存放名为weread.svg的热力图。但是如果直接引用图片在预览模式则可能会自动添加阴影，因此需要自定义一下CSS样式。
+```yaml
+- name: Rename weread.svg to a random name
+    run: |
+        RANDOM_FILENAME=$(uuidgen).svg
+        mv ./OUT_FOLDER/weread.svg ./OUT_FOLDER/$RANDOM_FILENAME
+        echo "Renamed file to $RANDOM_FILENAME"
+- name: read time sync
+    run: |
+        python -u scripts/read_time.py
+```
+替换成
+```yaml
+- name: push
+    run: |		
+        git checkout --orphan output		
+        git reset		
+        git config --local user.email "action@github.com"		
+        git config --local user.name "GitHub Action"		
+        git add ./OUT_FOLDER		
+        git commit -m '生成热力图' || echo "nothing to commit"		
+        git push origin output -f || echo "nothing to push"
+```
+8. 项目运行后，会自动在`output`分支中的`./OUT_FOLDER`文件夹中存放名为weread.svg的热力图。但是如果直接引用图片在预览模式则可能会自动添加阴影，因此需要自定义一下CSS样式。
 在ReadingCard中添加`<img src="https://raw.githubusercontent.com/ZiGmaX809/weread2notion-pro/output/OUT_FOLDER/weread.svg" class="custom_card">`
 并且在`设置-外观-CSS代码片段`中添加自定义片段
-	```css
-	.custom_card {
-		--webkit-filter: drop-shadow: 0 0px 0px #ccc !important;
-		box-shadow: 0 0px 0px #ccc; 
-	}
-	```
+```css
+.custom_card {
+	--webkit-filter: drop-shadow: 0 0px 0px #ccc !important;
+	box-shadow: 0 0px 0px #ccc; 
+}
+```
