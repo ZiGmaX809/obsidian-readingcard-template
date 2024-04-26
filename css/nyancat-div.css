@@ -27,7 +27,7 @@
 }
 
 .nyan-cat-rainbow {
-    min-width: 6px;
+    min-width: 8px;
     width: 100%;
     height: 100%;
     background: var(--nyan-cat-bg-color);
