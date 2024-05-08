@@ -123,7 +123,7 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 
 // 构建按年、月划分的阅读记录对象
 fileInfoArray.forEach(info => {
-	// 仅显示2024年度
+	// 仅显示2024年度，如需显示全部笔记，可以注释下面一行
 	if (info.year == '2024') {
 		if (read_years_months.hasOwnProperty(info.year)) {
 			if (!read_years_months[info.year].includes(info.month)) {
