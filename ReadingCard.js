@@ -29,6 +29,7 @@ const weReadFiles = dv
 	.where(b => b.path.endsWith(b.name + '.md'));
 //按年、月划分阅读记录
 let read_years_months = {};
+
 // 主题颜色配置
 const theme = [
 	//常规配色
@@ -36,6 +37,7 @@ const theme = [
 	//莫兰迪配色
 	[color_manager.pomelo, color_manager.daffodil, color_manager.seasky],
 ];
+
 //阅读进度颜色
 const progress_color = [
 	//常规配色
@@ -55,97 +57,92 @@ const progress_color = [
 		color_manager.pulp, //已读完状态颜色
 	],
 ];
+
 const selected = 1; //切换主题颜色：0-常规 1-莫兰迪
 
-//获取每个笔记信息
-for (let eachfile of weReadFiles) {
-	//获取作者、简介、阅读日期等
+// 预先计算好颜色
+const themeColor = theme[selected];
+const progressColors = progress_color[selected];
+
+// 预先编译正则表达式
+const regex = /(\d{4})-(\d{1,2})-(\d{1,2})/;
+
+// 预先构建彩虹猫进度条样式模板
+const progressBarTemplate =
+	"<div class='nyan-cat-progress-container'><div class='nyan-cat-progress-bar' value={progress} ><div class='nyan-cat-rainbow'><div class='nyan-cat-img'></div></div></div></div>";
+
+// 收集所有文件信息到数组中
+const fileInfoArray = weReadFiles.map(eachfile => {
 	const bookInfo = eachfile.frontmatter;
-	let name = eachfile.link;
-	let author =
+	const name = eachfile.link;
+	const author =
 		bookInfo.author != null
-			? '\r`[!!|book-user|book-user:作者：' + bookInfo.author + '|' + theme[selected][0] + ']`'
-			: '\r`[!!|book-user|book-user:作者：-|]`';
-	//let intro = bookInfo.intro != null ? '\r简介：' + bookInfo.intro.substring(0,50) + '……' : '\r简介：-'
-	let readdate =
-		'\r`[!!|calendar-range|calendar-range:阅读日期：' +
-		bookInfo.lastReadDate +
-		'|' +
-		theme[selected][1] +
-		']`';
-	let readtime =
-		'\r`[!!|timer|timer:阅读时长：' + bookInfo.readingTime + '|' + theme[selected][2] + ']`';
+			? `\r\`[!!|book-user|book-user:作者：${bookInfo.author}|${themeColor[0]}]\``
+			: `\r\`[!!|book-user|book-user:作者：-|]\``;
+	const readdate = `\r\`[!!|calendar-range|calendar-range:阅读日期：${bookInfo.lastReadDate}|${themeColor[1]}]\``;
+	const readtime = `\r\`[!!|timer|timer:阅读时长：${bookInfo.readingTime}|${themeColor[2]}]\``;
 
-	const covertInfo = name + author + readdate + readtime;
+	const cover = `![](${bookInfo.cover})`;
+	const covertInfo = `${name} ${author} ${readdate} ${readtime}`;
 
-	//获取封面
-	eachfile['cover'] = dv.paragraph('![](' + bookInfo.cover + ')');
+	const lastReadDateMatch = regex.exec(bookInfo.lastReadDate);
+	const year = lastReadDateMatch[1];
+	const month = lastReadDateMatch[2];
 
-	//获取阅读年份&月份
-	const regex = /(\d{4})-(\d{1,2})-(\d{1,2})/g;
-	let lastReadDate = regex.exec(bookInfo.lastReadDate);
-	if (lastReadDate !== null) {
-		let year = lastReadDate[1];
-		let month = lastReadDate[2];
-		if (read_years_months.hasOwnProperty(year)) {
-			if (!read_years_months[year].includes(month)) {
-				read_years_months[year].push(month);
+	const readProgress = bookInfo.progress == -1 ? '0%' : bookInfo.progress;
+	const readStatus = bookInfo.readingStatus;
+	const progress = readStatus == '读完' ? 100 : parseFloat(readProgress);
+	let progressColor, progressBar;
+
+	if (progress == 100) {
+		progressColor = progressColors[4];
+		progressBar = progressBarTemplate.replace('{progress}', '100');
+	} else {
+		progressColor =
+			Math.floor(progress / 25) < progressColors.length
+				? progressColors[Math.floor(progress / 25)]
+				: progressColors[0];
+		progressBar = progressBarTemplate.replace('{progress}', progress);
+	}
+
+	const info =
+		readProgress !== '100%'
+			? `${covertInfo} \r\`[!!|book-marked|book: 阅读进度：${readProgress}|${progressColor}]\`\r ${progressBar}`
+			: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColor}]\`\r ${progressBar}`;
+
+	return {
+		name,
+		author,
+		year,
+		month,
+		lastreaddate: bookInfo.lastReadDate,
+		cover,
+		info,
+	};
+});
+
+// 构建按年、月划分的阅读记录对象
+fileInfoArray.forEach(info => {
+	// 仅显示2024年度
+	if (info.year == '2024') {
+		if (read_years_months.hasOwnProperty(info.year)) {
+			if (!read_years_months[info.year].includes(info.month)) {
+				read_years_months[info.year].push(info.month);
 			}
 		} else {
-			read_years_months[year] = [month];
+			read_years_months[info.year] = [info.month];
 		}
-		eachfile['year'] = year;
-		eachfile['month'] = month;
 	}
+});
 
-	//获取阅读进度或者是否读完状态
-	const readProgress = bookInfo.progress == -1 ? '0%' : bookInfo.progress;
-	const readStatus = bookInfo.readingStatus
-	//添加彩虹猫进度条样式
-	const progress = readStatus == '读完' ? 100 : parseFloat(readProgress);
-	const readProgressBar =
-		"<div class='nyan-cat-progress-container'><div class='nyan-cat-progress-bar' value=" +
-		progress +
-		" ><div class='nyan-cat-rainbow'><div class='nyan-cat-img'></div></div></div></div>";
-
-	if (progress < 100) {
-		let p_color = progress_color[selected][Math.floor(progress / 25)];
-		eachfile['info'] = dv.paragraph(
-			covertInfo +
-				'\r`[!!|book-marked|book: 阅读进度：' +
-				readProgress +
-				'|' +
-				p_color +
-				']`' +
-				readProgressBar
-		);
-	} else {
-		eachfile['info'] = dv.paragraph(
-			covertInfo +
-				'\r`[!!|book-check|book:已读完|' +
-				progress_color[selected][4] +
-				']`' +
-				readProgressBar
-		);
-	}
-}
-
-//按年份输出阅读卡片
+// 按年份输出阅读卡片
 for (let y in read_years_months) {
-	dv.paragraph('## ' + y + '年');
-	for (let m of read_years_months[y].sort()) {
-		dv.paragraph('### ' + parseInt(m).toString() + '月');
+	dv.paragraph(`## ${y}年`);
+	read_years_months[y].sort().forEach(m => {
+		dv.paragraph(`### ${m}月`);
 		dv.table(
 			['封面', '信息'],
-			weReadFiles
-				.sort(b => b.name)
-				.map(b => {
-					if (b && b.year && y === b.year && b.month && m === b.month) {
-						return [b.cover, b.info];
-					}
-					return null; // 如果不匹配，返回 null
-				})
-				.filter(item => item !== null) // 过滤掉不匹配的项
+			fileInfoArray.filter(b => b.year === y && b.month === m).map(b => [b.cover, b.info])
 		);
-	}
+	});
 }
