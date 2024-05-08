@@ -1,6 +1,6 @@
 const Path = '📖 书山学海/📝 读书笔记'; //读书笔记文件夹路径
 
-//色彩管理
+// 色彩管理
 const color_manager = {
 	yellow: 'var(--color-yellow-rgb)',
 	green: 'var(--color-green-rgb)',
@@ -27,8 +27,11 @@ const weReadFiles = dv
 	.pages()
 	.file.where(b => b.path.indexOf(Path) != -1)
 	.where(b => b.path.endsWith(b.name + '.md'));
-//按年、月划分阅读记录
+// 按年、月划分阅读记录
 let read_years_months = {};
+
+// 仅需显示相应年度的读书笔记，如需显示全部，则将showYear改为null(无引号)
+const showYear = null;
 
 // 主题颜色配置
 const theme = [
@@ -38,7 +41,7 @@ const theme = [
 	[color_manager.pomelo, color_manager.daffodil, color_manager.seasky],
 ];
 
-//阅读进度颜色
+// 阅读进度颜色
 const progress_color = [
 	//常规配色
 	[
@@ -123,8 +126,7 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 
 // 构建按年、月划分的阅读记录对象
 fileInfoArray.forEach(info => {
-	// 仅显示2024年度，如需显示全部笔记，可以注释下面一行
-	if (info.year == '2024') {
+	if (showYear == null || info.year == showYear) {
 		if (read_years_months.hasOwnProperty(info.year)) {
 			if (!read_years_months[info.year].includes(info.month)) {
 				read_years_months[info.year].push(info.month);
