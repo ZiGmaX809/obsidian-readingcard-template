@@ -107,7 +107,7 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 
 	const info =
 		readProgress !== '100%'
-			? `${covertInfo} \r\`[!!|book-marked|book: 阅读进度：${readProgress}|${progressColor}]\`\r ${progressBar}`
+			? `${covertInfo} \r\`[!!|book-marked|book:阅读进度：${readProgress}|${progressColor}]\`\r ${progressBar}`
 			: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColor}]\`\r ${progressBar}`;
 
 	return {
