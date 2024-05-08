@@ -93,7 +93,8 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 	const month = lastReadDateMatch[2];
 
 	const readStatus = bookInfo.readingStatus;
-	const readProgress = bookInfo.progress == -1 ? 0 : readStatus == '读完' ? 100 : parseFloat(bookInfo.progress);
+	const readProgress =
+		bookInfo.progress == -1 ? 0 : readStatus == '读完' ? 100 : parseFloat(bookInfo.progress);
 	let progressColor, progressBar;
 
 	if (readProgress == 100) {
@@ -143,7 +144,10 @@ for (let y in read_years_months) {
 		dv.paragraph(`### ${m}月`);
 		dv.table(
 			['封面', '信息'],
-			fileInfoArray.filter(b => b.year === y && b.month === m).map(b => [b.cover, b.info])
+			fileInfoArray
+				.sort(b => b.lastreaddate) // 如需逆序显示，请在前面代码改为[b.lastreaddate,'desc']
+				.filter(b => b.year === y && b.month === m)
+				.map(b => [b.cover, b.info])
 		);
 	});
 }
