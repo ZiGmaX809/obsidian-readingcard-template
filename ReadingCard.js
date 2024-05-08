@@ -92,25 +92,24 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 	const year = lastReadDateMatch[1];
 	const month = lastReadDateMatch[2];
 
-	const readProgress = bookInfo.progress == -1 ? '0%' : bookInfo.progress;
 	const readStatus = bookInfo.readingStatus;
-	const progress = readStatus == '读完' ? 100 : parseFloat(readProgress);
+	const readProgress = bookInfo.progress == -1 ? 0 : readStatus == '读完' ? 100 : parseFloat(bookInfo.progress);
 	let progressColor, progressBar;
 
-	if (progress == 100) {
+	if (readProgress == 100) {
 		progressColor = progressColors[4];
 		progressBar = progressBarTemplate.replace('{progress}', '100');
 	} else {
 		progressColor =
-			Math.floor(progress / 25) < progressColors.length
-				? progressColors[Math.floor(progress / 25)]
+			Math.floor(readProgress / 25) < progressColors.length
+				? progressColors[Math.floor(readProgress / 25)]
 				: progressColors[0];
-		progressBar = progressBarTemplate.replace('{progress}', progress);
+		progressBar = progressBarTemplate.replace('{progress}', readProgress);
 	}
 
 	const info =
-		readProgress !== '100%'
-			? `${covertInfo} \r\`[!!|book-marked|book:阅读进度：${readProgress}|${progressColor}]\`\r ${progressBar}`
+		readProgress !== 100
+			? `${covertInfo} \r\`[!!|book-marked|book:阅读进度：${readProgress}%|${progressColor}]\`\r ${progressBar}`
 			: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColor}]\`\r ${progressBar}`;
 
 	return {
