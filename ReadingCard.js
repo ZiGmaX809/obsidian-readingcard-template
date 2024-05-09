@@ -1,4 +1,15 @@
+// 自定义参数
 const Path = '📖 书山学海/📝 读书笔记'; //读书笔记文件夹路径
+const showYear = null; // 仅需显示相应年度的读书笔记，如需显示全部，则将showYear改为null(无引号)
+const selected = 1; //切换主题颜色：0-常规 1-莫兰迪
+
+// 遍历Path文件夹下所有读书笔记
+const weReadFiles = dv
+	.pages()
+	.file.where(b => b.path.indexOf(Path) != -1)
+	.where(b => b.path.endsWith(b.name + '.md'));
+// 按年、月划分阅读记录
+let read_years_months = {};
 
 // 色彩管理
 const color_manager = {
@@ -21,17 +32,6 @@ const color_manager = {
 	honor: '229,140,197', //荣耀
 	love: '241,138,161', //火烈鸟
 };
-
-// 遍历Path文件夹下所有读书笔记
-const weReadFiles = dv
-	.pages()
-	.file.where(b => b.path.indexOf(Path) != -1)
-	.where(b => b.path.endsWith(b.name + '.md'));
-// 按年、月划分阅读记录
-let read_years_months = {};
-
-// 仅需显示相应年度的读书笔记，如需显示全部，则将showYear改为null(无引号)
-const showYear = null;
 
 // 主题颜色配置
 const theme = [
@@ -60,8 +60,6 @@ const progress_color = [
 		color_manager.pulp, //已读完状态颜色
 	],
 ];
-
-const selected = 1; //切换主题颜色：0-常规 1-莫兰迪
 
 // 预先计算好颜色
 const themeColor = theme[selected];
@@ -95,23 +93,20 @@ const fileInfoArray = weReadFiles.map(eachfile => {
 	const readStatus = bookInfo.readingStatus;
 	const readProgress =
 		bookInfo.progress == -1 ? 0 : readStatus == '读完' ? 100 : parseFloat(bookInfo.progress);
-	let progressColor, progressBar;
 
-	if (readProgress == 100) {
-		progressColor = progressColors[4];
-		progressBar = progressBarTemplate.replace('{progress}', '100');
-	} else {
-		progressColor =
-			Math.floor(readProgress / 25) < progressColors.length
-				? progressColors[Math.floor(readProgress / 25)]
-				: progressColors[0];
-		progressBar = progressBarTemplate.replace('{progress}', readProgress);
-	}
+	const progressBar = progressBarTemplate.replace(
+		'{progress}',
+		readProgress == 100 ? '100' : readProgress
+	);
+	const progressColor =
+		Math.floor(readProgress / 25) < progressColors.length
+			? progressColors[Math.floor(readProgress / 25)]
+			: progressColors[0];
 
 	const info =
 		readProgress !== 100
 			? `${covertInfo} \r\`[!!|book-marked|book:阅读进度：${readProgress}%|${progressColor}]\`\r ${progressBar}`
-			: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColor}]\`\r ${progressBar}`;
+			: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColors[4]}]\`\r ${progressBar}`;
 
 	return {
 		name,
