@@ -1,7 +1,8 @@
 // 自定义参数
-const Path = '📖 书山学海/📝 读书笔记'; //读书笔记文件夹路径
-const showYear = null; // 仅需显示相应年度的读书笔记，如需显示全部，则将showYear改为null(无引号)
-const selected = 1; //切换主题颜色：0-常规 1-莫兰迪
+const Path = '📖 书山学海/📝 读书笔记'; // 读书笔记文件夹路径
+const showYear = null; // 仅需显示相应年度的读书笔记，如需显示全部，则将showYear改为null
+const selected = 1; // 切换主题颜色：0-常规 1-莫兰迪
+const showDesc = true; // 是否需要逆序显示
 
 // 遍历Path文件夹下所有读书笔记
 const weReadFiles = dv
@@ -132,16 +133,21 @@ fileInfoArray.forEach(info => {
 	}
 });
 
+// 是否需要逆序构建卡片年份
+let sortedYears = showDesc ? Object.keys(read_years_months).map(Number).sort().reverse() :
+Object.keys(read_years_months).map(Number).sort()
+
 // 按年份输出阅读卡片
-for (let y in read_years_months) {
+for (let y of sortedYears) {
 	dv.paragraph(`## ${y}年`);
-	read_years_months[y].sort().forEach(m => {
-		dv.paragraph(`### ${m}月`);
+	let sortedMonths = showDesc ? read_years_months[y].sort().reverse() : read_years_months[y].sort()
+	sortedMonths.forEach(m => {
+		dv.paragraph(`### ${parseInt(m)}月`); // 此处转换是需要去除月份前的'0'
 		dv.table(
 			['封面', '信息'],
 			fileInfoArray
-				.sort(b => b.lastreaddate) // 如需逆序显示，请在前面代码改为[b.lastreaddate,'desc']
-				.filter(b => b.year === y && b.month === m)
+				.sort(b => b.lastreaddate,showDesc ? 'desc' : 'asc')
+				.filter(b => b.year == y && b.month == m)
 				.map(b => [b.cover, b.info])
 		);
 	});
