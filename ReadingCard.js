@@ -7,10 +7,9 @@ const showDesc = true; // 是否需要逆序显示
 // 遍历Path文件夹下所有读书笔记
 const weReadFiles = dv
 	.pages()
-	.file.where(b => b.path.indexOf(Path) != -1)
-	.where(b => b.path.endsWith(b.name + '.md'));
+	.file.where(b => b.path.indexOf(Path) !== -1 && b.path.endsWith(b.name + '.md'));
 // 按年、月划分阅读记录
-let read_years_months = {};
+const read_years_months = new Map();
 
 // 色彩管理
 const color_manager = {
@@ -78,78 +77,100 @@ const weReadInfoArray = weReadFiles.values
 	.sort((a, b) => new Date(b.frontmatter.lastReadDate) - new Date(a.frontmatter.lastReadDate))
 	.map(eachitem => {
 		const bookInfo = eachitem.frontmatter;
-		const name = eachitem.link;
-		const author =
-			bookInfo.author != null
-				? `\r\`[!!|book-user|book-user:作者：${bookInfo.author}|${themeColor[0]}]\``
-				: `\r\`[!!|book-user|book-user:作者：-|]\``;
-		const readdate = `\r\`[!!|calendar-range|calendar-range:阅读日期：${bookInfo.lastReadDate}|${themeColor[1]}]\``;
-		const readtime = `\r\`[!!|timer|timer:阅读时长：${bookInfo.readingTime}|${themeColor[2]}]\``;
-
-		const cover = `![](${bookInfo.cover})`;
-		const covertInfo = `${name} ${author} ${readdate} ${readtime}`;
-
 		const lastReadDateMatch = regex.exec(bookInfo.lastReadDate);
-		const year = lastReadDateMatch[1];
-		const month = lastReadDateMatch[2];
 
-		const readStatus = bookInfo.readingStatus;
-		const readProgress =
-			bookInfo.progress == -1 ? 0 : readStatus == '读完' ? 100 : parseFloat(bookInfo.progress);
+		if (!lastReadDateMatch) return null;
+
+		const [, year_, month_] = lastReadDateMatch;
+		const [year, month] = [Number(year_), Number(month_)];
+
+		const readPrecent =
+			bookInfo.readingStatus === '读完'
+				? 100
+				: bookInfo.progress === -1
+				? 0
+				: parseFloat(bookInfo.progress);
 
 		const progressBar = progressBarTemplate.replace(
 			'{progress}',
-			readProgress == 100 ? '100' : readProgress
+			readPrecent == 100 ? '100' : readPrecent
 		);
 		const progressColor =
-			Math.floor(readProgress / 25) < progressColors.length
-				? progressColors[Math.floor(readProgress / 25)]
-				: progressColors[0];
-
-		const info =
-			readProgress !== 100
-				? `${covertInfo} \r\`[!!|book-marked|book:阅读进度：${readProgress}%|${progressColor}]\`\r ${progressBar}`
-				: `${covertInfo} \r\`[!!|book-check|book:已读完|${progressColors[4]}]\`\r ${progressBar}`;
+			progressColors[Math.min(Math.floor(readPrecent / 25), progressColors.length - 1)];
 
 		// 构建按年、月划分的阅读记录对象
 		if (showYear == null || year == showYear) {
-			if (read_years_months.hasOwnProperty(year)) {
-				if (!read_years_months[year].includes(month)) {
-					read_years_months[year].push(month);
-				}
-			} else {
-				read_years_months[year] = [month];
-			}
+			const existingMonths = read_years_months.get(year) || new Set();
+			existingMonths.add(month);
+			read_years_months.set(year, existingMonths);
 		}
 
 		return {
-			name,
-			author,
 			year,
 			month,
 			lastreaddate: bookInfo.lastReadDate,
-			cover,
-			info,
+			cover: `![](${bookInfo.cover})`,
+			info: readerBookInfo(
+				eachitem.link,
+				bookInfo,
+				progressBar,
+				readPrecent,
+				themeColor,
+				progressColor
+			),
 		};
-	});
+	})
+	.filter(Boolean);
 
-// 是否需要逆序构建卡片年份
-let sortedYears = showDesc
-	? Object.keys(read_years_months).map(Number).sort().reverse()
-	: Object.keys(read_years_months).map(Number).sort();
+function badges(icon, color, title) {
+	return `<br><div class='inline-badges' style='background-color:rgba(${color},0.177);color:rgba(${color},1)'><span class='${icon}' style='background-color:rgba(${color},1)'></span><span class='inline-badges-title-inner'>${title}</span></div>`;
+}
 
-// 按年份输出阅读卡片
+function readerBookInfo(name, bookInfo, progressBar, readPrecent, themeColor, progressColor) {
+	const author = badges(
+		'book-user-icon',
+		themeColor[0],
+		'作者：' + (bookInfo.author != null ? bookInfo.author : '-')
+	);
+	const readdate = badges('read-date-icon', themeColor[1], '阅读日期：' + bookInfo.lastReadDate);
+	const readtime = badges('read-time-icon', themeColor[2], '阅读时长：' + bookInfo.readingTime);
+
+	const progress_switch = [
+		['book-icon', progressColor, '阅读进度：' + readPrecent + '%'],
+		['book-checked-icon', progressColors[4], '已读完'],
+	];
+
+	const info =
+		name +
+		author +
+		readdate +
+		readtime +
+		badges(...(readPrecent !== 100 ? progress_switch[0] : progress_switch[1])) +
+		progressBar;
+
+	return info;
+}
+
+let sortedYears = Object.keys(Object.fromEntries(read_years_months))
+	.map(Number)
+	.sort(showDesc ? (a, b) => b - a : (a, b) => a - b);
+
 for (let y of sortedYears) {
 	dv.paragraph(`## ${y}年`);
-	let sortedMonths = showDesc ? read_years_months[y].sort().reverse() : read_years_months[y].sort();
-	sortedMonths.forEach(m => {
-		dv.paragraph(`### ${parseInt(m)}月`); // 此处转换是需要去除月份前的'0'
-		dv.table(
-			['封面', '信息'],
-			weReadInfoArray
-				.sort(b => b.lastreaddate, showDesc ? 'desc' : 'asc')
-				.filter(b => b.year == y && b.month == m)
-				.map(b => [b.cover, b.info])
-		);
-	});
+	const monthsInYear = Array.from(read_years_months.get(y) || []).sort(
+		showDesc ? (a, b) => Number(b) - Number(a) : (a, b) => Number(a) - Number(b)
+	);
+
+	for (let m of monthsInYear) {
+		dv.paragraph(`### ${m}月`);
+
+		const filteredBooks = weReadInfoArray.filter(b => b.year === y && b.month === m);
+
+		if (filteredBooks.length > 0) {
+			dv.table(
+				['封面', '信息'],
+				filteredBooks.map(b => [b.cover, b.info])
+			);
+		}
+	}
 }

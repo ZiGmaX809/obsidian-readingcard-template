@@ -1,0 +1,77 @@
+:root {
+	--inline-badge-border-color: transparent;
+	--inline-badge-font-size: 0.8em;
+	--inline-badge-border-radius: 4px;
+	--inline-badge-border: 1px solid var(--inline-badge-border-color);
+
+	--book-user: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJzdmctaWNvbiBsdWNpZGUtYm9vay11c2VyIj48cGF0aCBkPSJNMTUgMTNhMyAzIDAgMSAwLTYgMCIvPjxwYXRoIGQ9Ik00IDE5LjV2LTE1QTIuNSAyLjUgMCAwIDEgNi41IDJIMTlhMSAxIDAgMCAxIDEgMXYxOGExIDEgMCAwIDEtMSAxSDYuNWExIDEgMCAwIDEgMC01SDIwIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSI4IiByPSIyIi8+PC9zdmc+');
+	--read-date: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJzdmctaWNvbiBsdWNpZGUtY2FsZW5kYXItcmFuZ2UiPjxyZWN0IHg9IjMiIHk9IjQiIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgcng9IjIiLz48cGF0aCBkPSJNMTYgMnY0Ii8+PHBhdGggZD0iTTMgMTBoMTgiLz48cGF0aCBkPSJNOCAydjQiLz48cGF0aCBkPSJNMTcgMTRoLTYiLz48cGF0aCBkPSJNMTMgMThINyIvPjxwYXRoIGQ9Ik03IDE0aC4wMSIvPjxwYXRoIGQ9Ik0xNyAxOGguMDEiLz48L3N2Zz4=');
+	--timer: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJzdmctaWNvbiBsdWNpZGUtdGltZXIiPjxsaW5lIHgxPSIxMCIgeTE9IjIiIHgyPSIxNCIgeTI9IjIiLz48bGluZSB4MT0iMTIiIHkxPSIxNCIgeDI9IjE1IiB5Mj0iMTEiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjE0IiByPSI4Ii8+PC9zdmc+');
+	--book: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJzdmctaWNvbiBsdWNpZGUtYm9vay1tYXJrZWQiPjxwYXRoIGQ9Ik0xMCAydjhsMy0zIDMgM1YyIi8+PHBhdGggZD0iTTQgMTkuNXYtMTVBMi41IDIuNSAwIDAgMSA2LjUgMkgxOWExIDEgMCAwIDEgMSAxdjE4YTEgMSAwIDAgMS0xIDFINi41YTEgMSAwIDAgMSAwLTVIMjAiLz48L3N2Zz4=');
+	--book-checked: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJzdmctaWNvbiBsdWNpZGUtYm9vay1jaGVjayI+PHBhdGggZD0iTTQgMTkuNXYtMTVBMi41IDIuNSAwIDAgMSA2LjUgMkgxOWExIDEgMCAwIDEgMSAxdjE4YTEgMSAwIDAgMS0xIDFINi41YTEgMSAwIDAgMSAwLTVIMjAiLz48cGF0aCBkPSJtOSA5LjUgMiAyIDQtNCIvPjwvc3ZnPg==');
+}
+
+.inline-badges {
+	display: inline-flex;
+    margin: 15px 0 0 0; 
+	padding: 0 4px;
+	height: 25px;
+	vertical-align: middle;
+	border-radius: var(--inline-badge-border-radius);
+	font-weight: 500;
+	border: var(--inline-badge-border);
+	cursor: default;
+}
+
+.inline-badges .inline-badges-title-inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-content: center;
+	margin-left: 4px;
+	font-size: var(--inline-badge-font-size);
+}
+
+.book-user-icon {
+	width: 14px;
+	height: 25px;
+	mask: var(--book-user) no-repeat center;
+	mask-size: contain;
+	margin-top: -1px;
+	align-items: center; 
+}
+
+.read-date-icon {
+	width: 14px;
+	height: 25px;
+	mask: var(--read-date) no-repeat center;
+	mask-size: contain;
+	margin-top: -1px;
+	align-items: center; 
+}
+
+.read-time-icon {
+	width: 14px;
+	height: 25px;
+	mask: var(--timer) no-repeat center;
+	mask-size: contain;
+	margin-top: -1px;
+	align-items: center; 
+}
+
+.book-icon {
+	width: 14px;
+	height: 25px;
+	mask: var(--book) no-repeat center;
+	mask-size: contain;
+	margin-top: -1px;
+	align-items: center; 
+}
+
+.book-checked-icon {
+	width: 14px;
+	height: 25px;
+	mask: var(--book-checked) no-repeat center;
+	mask-size: contain;
+	margin-top: -1px;
+	align-items: center; 
+}

@@ -12,6 +12,11 @@
 3. 以年、月分类展示当月所读的书籍；
 4. 自定义色彩管理，可自行变更主题。
 
+## 更新：
+
+1. 重写了书籍信息展示的css，以替换Badges插件；
+2. 优化了代码逻辑，较大幅度提升了性能；
+
 ## 准备工作
 
 ### 1. 插件
@@ -20,7 +25,7 @@
 
 1. **WeRead** [GitHub - zhaohongxuan/obsidian-weread-plugin: Obsidian Weread Plugin is a plugin to sync Weread(微信读书) hightlights and annotations into your Obsidian Vault.](https://github.com/zhaohongxuan/obsidian-weread-plugin)
 2. **Dataview** [GitHub - blacksmithgu/obsidian-dataview: A data index and query language over Markdown files, for https://obsidian.md/.](https://github.com/blacksmithgu/obsidian-dataview)
-3. **Badges** [GitHub - gapmiss/badges: A light-weight plugin for displaying inline "badges" in Obsidian.md](https://github.com/gapmiss/badges)
+3. ~~**Badges** [GitHub - gapmiss/badges: A light-weight plugin for displaying inline "badges" in Obsidian.md](https://github.com/gapmiss/badges)~~
 4. **（选装）Callout Manager** [GitHub - eth-p/obsidian-callout-manager: An Obsidian.md plugin that makes creating and configuring callouts easy.](https://github.com/eth-p/obsidian-callout-manager)
 
 请自行在第三方插件页面搜索安装。
@@ -46,6 +51,14 @@
 ```html
 <div class="nyan-cat-progress-container"><div class="nyan-cat-progress-bar" value=8><div class="nyan-cat-rainbow"><div class="nyan-cat-img"></div></div></div></div>
 ```
+
+#### 3.mybadges
+
+当展示数量超过10个以后（可能是5个），插件Badges对于展示卡片的渲染就会呈现卡顿。
+
+因此，在保证展示效果的前提下，重新写了css片段，以增强性能。
+
+以我为例，笔记文件夹中共有33篇笔记，如果使用Badges插件进行渲染的话需要2751ms，而更改为css渲染仅需702ms，提升了将近4倍性能。
 
 ## 插件设置
 
