@@ -130,7 +130,12 @@ function readerBookInfo(name, bookInfo, progressBar, readPrecent, themeColor, pr
 	const author = badges(
 		'book-user-icon',
 		themeColor[0],
-		'作者：' + (bookInfo.author != null ? bookInfo.author : '-')
+		'作者：' +
+			(bookInfo.author != null
+				? bookInfo.author.length > 8
+					? bookInfo.author.substring(0, 8) + '...'
+					: bookInfo.author
+				: '-')
 	);
 	const readdate = badges('read-date-icon', themeColor[1], '阅读日期：' + bookInfo.lastReadDate);
 	const readtime = badges('read-time-icon', themeColor[2], '阅读时长：' + bookInfo.readingTime);
