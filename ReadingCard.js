@@ -21,6 +21,9 @@ const color_manager = {
 	purple: 'var(--color-purple-rgb)',
 	orange: 'var(--color-orange-rgb)',
 	pink: 'var(--color-pink-rgb)',
+	teal: 'var(--color-teal-rgb)',
+	yellowgreen: 'var(--color-yellowgreen-rgb)',
+	turquoise: 'var(--color-turquoise-rgb)',
 	pomelo: '255,111,94', //红西柚
 	pulp: '235, 89, 94', //红橙
 	daffodil: '224,159,71', //黄水仙
@@ -38,16 +41,16 @@ const theme = [
 	//常规配色
 	[color_manager.yellow, color_manager.green, color_manager.blue],
 	//莫兰迪配色
-	[color_manager.pomelo, color_manager.daffodil, color_manager.seasky],
+	[color_manager.pomelo, color_manager.daffodil, color_manager.swanlake],
 ];
 
 // 阅读进度颜色
 const progress_color = [
 	//常规配色
 	[
-		color_manager.green,
-		color_manager.yellow,
+		color_manager.turquoise,
 		color_manager.orange,
+		color_manager.teal,
 		color_manager.red,
 		color_manager.pink, //已读完状态颜色
 	],
