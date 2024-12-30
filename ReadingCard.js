@@ -53,8 +53,8 @@ const progress_color = [
 	],
 	//莫兰迪配色
 	[
+		color_manager.seasky,
 		color_manager.plum,
-		color_manager.daffodil,
 		color_manager.turquoise,
 		color_manager.love,
 		color_manager.pulp, //已读完状态颜色
