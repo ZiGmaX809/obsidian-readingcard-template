@@ -27,13 +27,14 @@ const color_manager = {
 	pomelo: '255,111,94', //红西柚
 	pulp: '235, 89, 94', //红橙
 	daffodil: '224,159,71', //黄水仙
-	turquoise: '70,164,115', //翡翠
+	jade: '70,164,115', //翡翠
 	seasky: '125,201,231', //海洋天蓝
 	plum: '141,191,139', //青梅
 	swanlake: '60, 167, 171', //天鹅湖蓝
 	pelorous: '59,176,186', //冷青
 	honor: '229,140,197', //荣耀
 	love: '241,138,161', //火烈鸟
+	autumn: '233, 191, 102', //秋天
 };
 
 // 主题颜色配置
@@ -58,7 +59,7 @@ const progress_color = [
 	[
 		color_manager.seasky,
 		color_manager.plum,
-		color_manager.turquoise,
+		color_manager.autumn,
 		color_manager.love,
 		color_manager.pulp, //已读完状态颜色
 	],
