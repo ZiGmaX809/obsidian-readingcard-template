@@ -154,7 +154,7 @@ cssclasses:
 ## 进阶——每日阅读热力图
 
 > [!quote]
-> 需要借助另一个项目 [GitHub - ZiGma/WereadHeatmap](https://github.com/ZiGmaX809/WereadHeatmap.git) 以使用Github的Action功能生成每日的微信阅读热力图，生成后直接在Obsidian中引用即可。
+> 需要借助另一个项目 [GitHub - ZiGma/Weread_ReadTime_Heatmap](https://github.com/ZiGmaX809/Weread_ReadTime_Heatmap.git) 以使用Github的Action功能生成每日的微信阅读热力图，生成后直接在Obsidian中引用即可。
 
 
 ## 进阶——每日阅读热力图（旧）
